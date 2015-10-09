@@ -1,0 +1,47 @@
+
+
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+
+        <p>Hello world!</p>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>
+            $(window).bind("message", function(e){
+
+                var newName = 'John Smith',
+                    xhr = new XMLHttpRequest();
+
+                xhr.open('GET', encodeURI(e.originalEvent.data));
+
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+
+                        parent.postMessage({
+                            "status": xhr.status,
+                            "response": xhr.responseText
+                        }, '*');
+                    }
+                    else if (xhr.status !== 200) {
+                        console.log('Request failed.  Returned status of ' + xhr.status);
+                    }
+                };
+
+                xhr.send();
+            });
+
+        </script>
+
+    </body>
+</html>
